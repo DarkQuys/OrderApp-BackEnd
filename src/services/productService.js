@@ -65,33 +65,39 @@ const getAllProduct = (limit , page ,sort ,filter )=>{
     return new Promise(async(resolve , reject)=>{
         try{
         //const totalPage  = await Product.count()
-        //console.log(totalPage)
-        if(filter){
+            //console.log(totalPage)
+            
+            if (filter) {
+                console.log(filter )
             const label = filter[0]
-            const thisProduct = await Product.find({[label]: {'$regex' : filter[1]}})
+            const productFilter = await Product.find({[label]: {'$regex' : filter[1]}})
             //const totalPage = await Product.countDocuments()
             resolve({
                 status : "so good" ,
-                product : thisProduct 
+                product : productFilter 
             })
         }
-        if (sort){
-            const oj = {}
-            oj[sort[1]]=sort[0]
-            const thisProduct = await Product.find().limit(limit).skip(page).sort(oj)
-            const totalPage = await Product.countDocuments()
-            console.log(typeof limit)
-            resolve({
-                status : "so good" ,
-                product : thisProduct , 
-                total :totalPage,
-                pageCurrent :page+1 ,
-                totalPage : Math.ceil(totalPage/limit)
-            })
-        }
-        resolve({
-            status : "hmmm"
-        })
+            if (sort) {
+                const oj = {}
+                oj[sort[1]]=sort[0]
+                const thisProduct = await Product.find().limit(limit).skip(page*limit).sort(oj)
+                const totalPage = await Product.countDocuments()
+                console.log(typeof limit)
+                resolve({
+                    status : "so good" ,
+                    product : thisProduct , 
+                    total :totalPage,
+                    pageCurrent :page+1 ,
+                    totalPage : Math.ceil(totalPage/limit)
+                })
+            }
+            if (!sort) {
+                const all = await Product.find()
+                resolve({
+                    data: all
+                })
+            }
+           
         }
       
        

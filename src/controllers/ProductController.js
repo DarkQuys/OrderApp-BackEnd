@@ -47,9 +47,6 @@ const getProduct =async(req ,res)=>{
 const getAllProduct =async(req ,res)=>{
     try{  
         const {limit , page ,sort ,filter} = req.query
-        console.log(req.query)
-        console.log(typeof filter[1])
-        console.log(limit , page)
         const respon =await productService.getAllProduct(Number(limit), Number(page),sort ,filter)
         return res.status(200).json(respon)
         // return res.status(200).json({

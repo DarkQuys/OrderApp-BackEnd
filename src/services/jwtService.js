@@ -13,7 +13,7 @@ const genneralRefreshToken = (payload)=>{
 const refreshToken = (token)=>{
     return new Promise((resolve, reject)=>{
         try{
-           console.log(token);
+           console.log("token" ,token);
             jwt.verify(token , process.env.REFRESH_TOKEN , (err , user )=>{
                 if(err){
                     resolve({
