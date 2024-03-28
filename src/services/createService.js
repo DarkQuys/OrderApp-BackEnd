@@ -116,6 +116,8 @@ const getAllUser = ()=>{
         }
     })
 }
+
+
 const getUser = (id)=>{
     return new Promise (async(resolve , reject)=>{
         try{
