@@ -21,14 +21,15 @@ const createUser = async (req, res) => {
 }
 const loginUser = async (req , res) =>{
     try{
-        const userr = await User.findOne({
-            email : req.body.email
+        const response = await userService.loginuser(req.body)
+        const { refresh_token, ...newResponse } = response
+        res.cookie('refresh_token', refresh_token, {
+            HttpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            
         })
-        
-         const response = await userService.loginuser(req.body)
-        
-        
-        return res.status(200).json(response)
+        return res.status(200).json(newResponse)
     }catch(e){
         return res.status(404).json({
             message :e 
@@ -61,6 +62,18 @@ const deleteUser= async(req, res )=>{
           })
         }
 }
+const deleteManyUser= async(req, res )=>{
+    try{
+        const userId = req.body
+        console.log(userId)
+        const respon = await userService.deleteManyUser(userId)
+        return res.status(200).json(respon)
+    }catch(e){
+      return res.status(404).json({
+        message : e 
+      })
+    }
+}
 const getAllUser =async(req ,res )=>{
         try{ 
             const respon = await userService.getAllUser()
@@ -75,7 +88,7 @@ const getAllUser =async(req ,res )=>{
 }
 const getUser =async(req ,res )=>{
     try{ 
-        const respon = await userService.getUser(req.params.id)
+        const respon = await userService.getUser(req.params.id ,)
         return res.status(200).json(respon)
     }
     catch(e){
@@ -87,7 +100,8 @@ const getUser =async(req ,res )=>{
 }
 const refreshToken = async(req ,res)=>{
     try{ 
-        const token =await req.headers.token.split(' ')[1]
+        //const token = await req.headers.token.split(' ')[1]
+        const token = req.cookies.refresh_token
         if(!token){
             return res.status(404).json({
                 status : "Not token"
@@ -104,6 +118,19 @@ const refreshToken = async(req ,res)=>{
     }
 
 }
+const logOut = async(req , res)=>{
+    try{
+        res.clearCookie('refresh_token')
+        return res.status(200).json({
+            message : "Good"
+        })
+    }catch(e){
+        return req.status(404).json({
+            message : e
+        })
+    }   
+
+}
 module.exports = {
     createUser,
     loginUser ,
@@ -111,5 +138,7 @@ module.exports = {
     deleteUser,
     getAllUser,
     getUser ,
-    refreshToken
+    refreshToken ,
+    logOut,
+    deleteManyUser
 }

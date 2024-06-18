@@ -13,7 +13,7 @@ const genneralRefreshToken = (payload)=>{
 const refreshToken = (token)=>{
     return new Promise((resolve, reject)=>{
         try{
-           console.log(token);
+           //console.log("token" ,token);
             jwt.verify(token , process.env.REFRESH_TOKEN , (err , user )=>{
                 if(err){
                     resolve({
@@ -25,15 +25,13 @@ const refreshToken = (token)=>{
                     id : payload?.id ,
                     isAdmin : payload?.isAdmin
                 }) 
-                console.log(access_token)
+                //console.log(access_token)
                 resolve({
                     status : "OKK" , 
                     mytoken :  access_token
                 })
             })
                 
-                 
-          
 
         }catch(e){
             reject(e)

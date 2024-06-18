@@ -33,6 +33,17 @@ const deleteProduct =async(req ,res)=>{
         })
     }
 }
+const deleteManyProduct =async(req ,res)=>{
+    try{
+        const idProduct = req.body
+        const respon =await productService.deleteManyProduct(idProduct)
+        return res.status(200).json(respon)
+    }catch(e){
+        return res.status(404).json({
+            status : "haha"
+        })
+    }
+}
 const getProduct =async(req ,res)=>{
     try{
         const idProduct = req.params.id
@@ -47,10 +58,22 @@ const getProduct =async(req ,res)=>{
 const getAllProduct =async(req ,res)=>{
     try{  
         const {limit , page ,sort ,filter} = req.query
-        console.log(req.query)
-        console.log(typeof filter[1])
-        console.log(limit , page)
+        console.log(limit , page , filter)
         const respon =await productService.getAllProduct(Number(limit), Number(page),sort ,filter)
+        return res.status(200).json(respon)
+        // return res.status(200).json({
+        //     status :'so good'
+        // })
+    }catch(e){
+        return res.status(404).json({
+            status : "haha",
+            
+        })
+    }
+}
+const getAllType =async(req ,res)=>{
+    try{  
+        const respon =await productService.getAllType()
         return res.status(200).json(respon)
         // return res.status(200).json({
         //     status :'so good'
@@ -68,5 +91,7 @@ module.exports ={
     updateProduct ,
     deleteProduct ,
     getProduct ,
-    getAllProduct
+    getAllProduct,
+    deleteManyProduct,
+    getAllType
 }

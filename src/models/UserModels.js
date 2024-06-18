@@ -6,9 +6,9 @@ const userSchema = new mongoose.Schema(
         email: { type: String ,required: true ,inque:true },
         password: { type: String,required: true },
         isAmin: { type: Boolean,default :false, required: true },
-        //phone: { type: Number,required: true },
-        // access_token: { type: String,required: true },
-        // refresh_token: {type: String,required: true}
+        phone : {type : Number} ,
+        address : {type : String} ,
+        avatar :{type : String}
     },
     {
         timestamps :true 
