@@ -29,8 +29,6 @@ const createUser = (newUser) => {
                     })
                 }
             }
-           
-         
         } catch (e) {
             reject({
                 status : "loi roi"

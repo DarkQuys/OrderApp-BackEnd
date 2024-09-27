@@ -1,8 +1,7 @@
 const productService = require('../services/productService')
-
+const Product = require('../models/ProductModels')
 const createProduct =async(req ,res)=>{
-    try{
-       
+    try{    
         const respon =await productService.createProduct(req.body)
         return res.status(200).json(respon)
     }catch(e){
@@ -86,6 +85,11 @@ const getAllType =async(req ,res)=>{
     }
 }
 
+
+
+
+
+
 module.exports ={
     createProduct ,
     updateProduct ,
@@ -93,5 +97,5 @@ module.exports ={
     getProduct ,
     getAllProduct,
     deleteManyProduct,
-    getAllType
+    getAllType,
 }

@@ -3,6 +3,7 @@ const User = require('../models/UserModels')
 var bcrypt = require('bcryptjs');
 const jwtService = require('../services/jwtService')
 var salt = bcrypt.genSaltSync(10);
+
 const createUser = async (req, res) => {
     try { 
         //console.log(req.body)
@@ -131,6 +132,8 @@ const logOut = async(req , res)=>{
     }   
 
 }
+
+
 module.exports = {
     createUser,
     loginUser ,
@@ -140,5 +143,6 @@ module.exports = {
     getUser ,
     refreshToken ,
     logOut,
-    deleteManyUser
+    deleteManyUser,
+    
 }
